@@ -7,7 +7,7 @@
     var scale = 0;
     var tid;
     var flexible = lib.flexible || (lib.flexible = {});
-    
+
     if (metaEl) {
         console.warn('将根据已有的meta标签来设置缩放比例');
         var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
@@ -22,11 +22,11 @@
             var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
             if (initialDpr) {
                 dpr = parseFloat(initialDpr[1]);
-                scale = parseFloat((1 / dpr).toFixed(2));    
+                scale = parseFloat((1 / dpr).toFixed(2));
             }
             if (maximumDpr) {
                 dpr = parseFloat(maximumDpr[1]);
-                scale = parseFloat((1 / dpr).toFixed(2));    
+                scale = parseFloat((1 / dpr).toFixed(2));
             }
         }
     }
@@ -34,10 +34,12 @@
     if (!dpr && !scale) {
         var isAndroid = win.navigator.appVersion.match(/android/gi);
         var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+
+        /*
         var devicePixelRatio = win.devicePixelRatio;
         if (isIPhone) {
             // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
-            if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {                
+            if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
                 dpr = 3;
             } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)){
                 dpr = 2;
@@ -46,6 +48,16 @@
             }
         } else {
             // 其他设备下，仍旧使用1倍的方案
+            dpr = 1;
+        }
+        */
+
+        var devicePixelRatio = parseInt(win.devicePixelRatio);
+        if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+            dpr = 3;
+        } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)){
+            dpr = 2;
+        } else {
             dpr = 1;
         }
         scale = 1 / dpr;
@@ -93,7 +105,7 @@
             doc.body.style.fontSize = 12 * dpr + 'px';
         }, false);
     }
-    
+
 
     refreshRem();
 
