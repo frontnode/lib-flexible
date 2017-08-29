@@ -79,9 +79,16 @@
 
     function refreshRem(){
         var width = docEl.getBoundingClientRect().width;
+
+        // more than 599 is pad, else is phone
+        if (width / dpr > 599) {
+            docEl.setAttribute('data-dpr', dpr + 1);
+        }
+
         if (width / dpr > 540) {
             width = 540 * dpr;
         }
+
         var rem = width / 10;
         docEl.style.fontSize = rem + 'px';
         flexible.rem = win.rem = rem;
